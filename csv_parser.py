@@ -60,32 +60,18 @@ def csv_dict_reader(file_obj):
 
 
     for line in reader:
-        #print(line["first_name"]),
-        #print(line["last_name"])
         #print(line["sys.argv[1]"])
-        #result = prog.match("aaac")
         result = prog.match(line[sys.argv[1]])
         if result is not None :
             print(line)
-            #line[sys.argv[1]]
             d[line[sys.argv[1]]] += 1
 
         #if prog.match(line[sys.argv[1]]): print(line)
-
-        #print (result.string)
-
-        #print(line[sys.argv[1]])
 
     #print( list(d.items()))
     print('\ndictionary:')
     print( d )
 
-    #print('\npopitem:')
-    #print( d.popitem() )
-
-    print('\n')
-    for line in d:
-        print(line)
 
     print('\nunsorted:')
     for line in d:
@@ -105,7 +91,7 @@ with open("some.csv") as f_obj:
     csv_dict_reader(f_obj)
 
 
-print("--------------")
+print("\n--------------\ncommandline parameters:")
 print(sys.argv[1] + " " + sys.argv[2])
 
 
