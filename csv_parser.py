@@ -31,67 +31,51 @@ aaab 1
 
 """
 
-__author__ = 'User'
-
 import csv
 
 import sys
 
 import re
 
-import collections
 
 from collections import defaultdict
 
 
+col_name = sys.argv[1]
+reg = sys.argv[2]
+
 #----------------------------------------------------------------------
 def csv_dict_reader(file_obj):
     """
-    Read a CSV file using csv.DictReader
+    Read a CSV file using csv.DictReader,
+    compare a col_name row values and regular expression
+    if match we output values sorted by the number of matches
     """
-    d = defaultdict(int)
 
+    d = defaultdict(int)   #dictionary with matched values and number of matches
 
-    prog = re.compile(sys.argv[2])
+    prog = re.compile(reg) #compiled regular expression from second command line parameter
 
     reader = csv.DictReader(file_obj, delimiter=',')
 
 
-
+    #choose lines that match regular expression and add values to d dictionary
     for line in reader:
-        #print(line["sys.argv[1]"])
-        result = prog.match(line[sys.argv[1]])
+        result = prog.match(line[col_name])
         if result is not None :
-            print(line)
-            d[line[sys.argv[1]]] += 1
-
-        #if prog.match(line[sys.argv[1]]): print(line)
-
-    #print( list(d.items()))
-    print('\ndictionary:')
-    print( d )
+            d[line[col_name]] += 1
 
 
-    print('\nunsorted:')
-    for line in d:
-        print(line + " " + str(d[line]))
-
-    print('\nsorted:')
+    #Sorted dictionary d output
     for key in sorted(d.keys(),reverse = True):
         print( str(key) + " " + str(d[key]))
 
-
-
 #----------------------------------------------------------------------
 
-#if __name__ == "__main__":
+
 
 with open("some.csv") as f_obj:
     csv_dict_reader(f_obj)
-
-
-print("\n--------------\ncommandline parameters:")
-print(sys.argv[1] + " " + sys.argv[2])
 
 
 
